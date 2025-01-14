@@ -18,6 +18,11 @@
             color: #fff;
             padding: 10px 20px;
             text-align: center;
+            height: 50px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
         }
         nav {
             background: #555;
@@ -37,6 +42,10 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        section.active {
+            display: block;
         }
         h1, h2 {
             color: #333;
@@ -50,13 +59,64 @@
             width: 100%;
             bottom: 0;
         }
+        #banner {
+            background-image: url('background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            color: #fff;
+            padding: 50px 20px;
+            position: relative;
+        }
+        #banner p {
+            position: relative;
+            z-index: 2;
+        }
+        #banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('nav a');
+            const sections = document.querySelectorAll('section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute('href').replace('#', '');
+
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Show the first section by default
+            if (sections.length > 0) {
+                sections[0].classList.add('active');
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
         <h1>Damiano Orlandi</h1>
-        <p>Welcome to my personal website!</p>
     </header>
+    
+    <div id="banner">
+        <p>Welcome to my personal website!</p>
+    </div>
     
     <nav>
         <a href="#about">About Me</a>
